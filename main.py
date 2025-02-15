@@ -3,8 +3,8 @@ import streamlit as st
 from typing import Optional
 
 BASE_API_URL = "http://127.0.0.1:7860"
-FLOW_ID = "ba843ceb-9a5f-4ba7-96de-cbb078c45520"
-ENDPOINT = "gstantra"
+FLOW_ID = "<YOUR-FLOW-ID>"
+ENDPOINT = "<SET_YOUR_DESIRED_ENDPOINT_NAME>"
 
 TWEAKS = {
   "File-TAhkx": {},
@@ -26,14 +26,6 @@ def run_flow(message: str,
   input_type: str = "chat",
   tweaks: Optional[dict] = None,
   api_key: Optional[str] = None) -> dict:
-    """
-    Run a flow with a given message and optional tweaks.
-
-    :param message: The message to send to the flow
-    :param endpoint: The ID or the endpoint name of the flow
-    :param tweaks: Optional tweaks to customize the flow
-    :return: The JSON response from the flow
-    """
     api_url = f"{BASE_API_URL}/api/v1/run/{endpoint}"
 
     payload = {
@@ -62,7 +54,6 @@ def main():
     
         try:
             response = run_flow(message, ENDPOINT, tweaks=TWEAKS)
-            # response = response["outputs"][0]["outputs"][0]["results"]["message"]["text"]
             result = response.get("outputs", [{}])[0].get("outputs", [{}])[0].get("results", {}).get("message", {}).get("text", "No response found")
             st.markdown("Your results: ")
             st.success(result)
